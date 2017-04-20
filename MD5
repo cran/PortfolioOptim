@@ -1,0 +1,17 @@
+3cb9691a656dee7017c3d0a177d5c1d4 *DESCRIPTION
+fcb8816bea4327249af018bf17130c60 *NAMESPACE
+23600849495afb1dae896b4d9aeed898 *R/BDportfolio_optim.R
+850d59321318c968e42a7fcdf867fbf6 *R/F_func.R
+3d04d57bfa39a17ff8c080de880cde66 *R/PortfolioOptimProjection.R
+649b69d89927392d0e3052a186612c88 *R/RISK_post.R
+e53e05e5c5ab8067df7be3add76d20ac *R/ZI_projection.R
+85dc95265a4b8aff05142fbd2f535368 *R/make_diag.R
+37028b6db8867ec5e8978b0fef628409 *man/BDportfolio_optim.Rd
+38eb5c86b93de394ebd9db2679f2b028 *man/PortfolioOptimProjection.Rd
+67d61dfced6c565169f7facbf9cb613a *tests/testthat.R
+0efa640a0f7ee0861cfac68d98f7bec3 *tests/testthat/test_BDportfolio_optim.R
+09ee2704278607d79bc57213edbee0b7 *tests/testthat/test_PortfolioOptimProjection.R
+5cb3f619cec2e7c8f8903bac67d3595f *tests/testthat/test_PortfolioOptimProjection_2.R
+a2f72be1f4f7c27dc5b81721b7a99df9 *tests/testthat/test_RISK_post.R
+9f0cb39c2da40bd9e19363ae1ff51220 *tests/testthat/test_ZI_projection.R
+3a4f5ee41420775cf3e369c96b9c5553 *tests/testthat/test_make_diag.R
