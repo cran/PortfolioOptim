@@ -12,6 +12,7 @@
 #'@param B g
 #'@param xe g
 #'@param ka g
+#'@keywords internal 
 
 
 .F_func <- function(rho, x, y, s, z, A, b, cl, p, B, xe, ka)

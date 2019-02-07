@@ -17,7 +17,7 @@
 #' 
 #'@usage BDportfolio_optim(dat, portfolio_return,  
 #'risk=c("CVAR", "DCVAR","LSAD","MAD"), alpha=0.95,  
-#'Aconstr=NULL, bconstr=NULL, LB=NULL, UB=NULL, maxiter=500,tol=1e-10) 
+#'Aconstr=NULL, bconstr=NULL, LB=NULL, UB=NULL, maxiter=500,tol=1e-8) 
 #' 
 #'@param dat Time series of returns data; dat = cbind(rr, pk), where \eqn{rr} is an array (time series) of asset returns,   
 #' for \eqn{n} returns and \eqn{k} assets it is an array with \eqn{\dim(rr) = (n, k)},     
@@ -52,7 +52,7 @@
 #' 
 #'\code{MAD} \tab  portfolio MAD.\cr 
 #' 
-#'\code{risk} \tab  portfolio risk measured by risk measure chosen for optimization.\cr 
+#'\code{risk} \tab  portfolio risk measured by the risk measure chosen for optimization.\cr 
 #' 
 #'\code{new_portfolio_return} \tab  modified target portfolio return; when the original target portfolio return \cr 
 #' 
@@ -62,9 +62,9 @@
 #'} 
 #' 
 #'@examples 
-#'  
-#'library(Rglpk) 
 #' 
+#'library (Rsymphony)  
+#'library(Rglpk) 
 #'library(mvtnorm)
 #'k = 3 
 #'num =100
@@ -83,7 +83,7 @@
 #'UB <- rep(1,k) 
 #' 
 #'res <- BDportfolio_optim(dat, port_ret, "CVAR", alpha_optim, 
-#' Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-10) 
+#' Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-8) 
 #' 
 #'cat ( c("Benders decomposition portfolio:\n\n")) 
 #'cat(c("weights \n")) 
@@ -113,7 +113,7 @@
 
 
 BDportfolio_optim <- function (dat, portfolio_return, risk = c("CVAR", "DCVAR", "LSAD", "MAD"),  alpha = 0.95,  
-					Aconstr =NULL, bconstr= NULL, LB = NULL, UB = NULL, maxiter = 500, tol = 1e-10 ) 
+					Aconstr =NULL, bconstr= NULL, LB = NULL, UB = NULL, maxiter = 500, tol = 1e-8 ) 
 { 
 
  ep = tol # tolerance for optimal solution 
@@ -278,7 +278,7 @@ BDportfolio_optim <- function (dat, portfolio_return, risk = c("CVAR", "DCVAR", 
    bmat = c(bmat, bcor1) 
    bmat = as.vector(bmat, mode="numeric") 
 
-   res = Rglpk::Rglpk_solve_LP(clin,  Amat, dir = rep( "<=", length(bmat)), bmat,  max = FALSE) 
+   res = Rsymphony::Rsymphony_solve_LP(clin,  Amat, dir = rep( "<=", length(bmat)), bmat,  max = FALSE, node_limit = 3000)
 
    sol = res$solution 
 

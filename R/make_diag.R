@@ -5,7 +5,7 @@
 #'
 #'@param x vector
 #'@return diagonal matrix y
-
+#'@keywords internal 
 
 
 .make_diag <- function (x){

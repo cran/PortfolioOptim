@@ -5,7 +5,8 @@ test_that("Input",{
 
 ###################################################
 
-require(Rglpk)
+#require(Rglpk)
+require(Rsymphony)
 library(PortfolioOptim)
 R0 = 0.05
 alpha_optim = 0.95

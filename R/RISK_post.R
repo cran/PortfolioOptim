@@ -4,7 +4,7 @@
 #'@param prob vector of probability of losses
 #'@param alpha confidence level for CVaR and VaR
 #'@return list of values
-
+#'@keywords internal 
 
 .RISK_post <- function (returns, prob, alpha)
 {

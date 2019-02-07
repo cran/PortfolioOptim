@@ -12,16 +12,18 @@
 #'@param B g 
 #'@param maxiter g
 #'@param tol g
+#'@param k g
 #'
 #'@return list
-#'
+#'@keywords internal 
 
-.ZI_projection <- function (clin, Amat, bmat, xhat, B, maxiter, tol)
+.ZI_projection <- function (clin, Amat, bmat, xhat, B, maxiter, tol, k)
 {
   # fixed values of some parameters  
   tol1 = 1e-3
   delta = 0.5
   p_pow = 0.8
+  tol_p = sqrt(tol)
   
   
   n = ncol(Amat)
@@ -96,13 +98,13 @@
       ds = rho_pow * kap * t(B) %*%(B %*% dx) - t(Amat) %*% dy + rho_pow * kap * t(B) %*% (B %*% (x_old - xhat)) - t(Amat) %*% y_old - s_old +clin
       dz = Amat %*% dx + rho_pow * kap *dy + Amat %*% x_old + rho_pow * kap * y_old - z_old - bmat
       xt <- x_old/dx
-      l1 <- min(-xt[xt<0])
+      if (min(xt) >=0) l1 <- Inf else l1 <- min(-xt[xt<0])
       yt <- y_old/dy
-      l2 <- min(-yt[yt<0])
+      if (min(yt) >=0) l2 <- Inf else  l2 <- min(-yt[yt<0])
       st <- s_old/ds
-      l3 <- min(-st[st<0])
+      if (min(st) >=0) l3 <- Inf else  l3 <- min(-st[st<0])
       zt <- z_old/dz
-      l4 <- min(-zt[zt<0])
+      if (min(zt) >=0) l4 <- Inf else l4 <- min(-zt[zt<0])
       
       alpha = min(1,l1,l3,l4)
       
@@ -159,6 +161,11 @@
 			cat(c("Maximal number of iteration has been exceeded. \n"))
 			break
 	}
+	x_port = x_old[1:k]
+	if (length(x_port[x_port < tol_p]) >= (k-1)){
+			cat(c("Solution is a maximal corner solution, i.e. whole investment goes into one asset. \n"))
+			break
+	} 
   }
    
   return(list(xproj = x_old, yproj = y_old,  fmin = max(abs(Fgn)) ))

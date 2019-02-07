@@ -53,7 +53,7 @@ PortfolioOptimProjection returns a list with items:
 
 \code{MAD} \tab  portfolio MAD.\cr
 
-\code{risk} \tab  portfolio risk measured by risk measure chosen for optimization.\cr
+\code{risk} \tab  portfolio risk measured by the risk measure chosen for optimization.\cr
 
 \code{new_portfolio_return} \tab  modified target portfolio return; when the original target portfolio return \cr
 
@@ -91,7 +91,7 @@ LB <- rep(0,k)
 UB <- rep(1,k)  
 
 res <- PortfolioOptimProjection(dat, port_ret, risk="MAD",  
-alpha=alpha_optim, w_m, Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-8)
+alpha=alpha_optim, w_m, Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-7)
 
 cat ( c("Projection optimal portfolio:\\n\\n"))
 cat(c("weights \\n"))
@@ -104,8 +104,8 @@ res$VaR, "\\n MAD = ", res$MAD,  "\\n\\n"))
 
 }
 \references{
-Palczewski, A., Fast LP Algorithms for Portfolio Optimization, Available at SSRN: \cr
-https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2951213.
+Palczewski, A., LP Algorithms for Portfolio Optimization: The PortfolioOptim Package, R Journal, 10(1) (2018), 308--327. DOI:10.32614/RJ-2018-028.
+
 
 Zhao, Y-B., Li, D., Locating the least 2-norm solution of linear programs via a path-following method, SIAM Journal on Optimization, 12 (2002), 893--912. DOI:10.1137/S1052623401386368.
 }

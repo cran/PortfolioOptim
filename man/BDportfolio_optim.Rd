@@ -6,7 +6,7 @@
 \usage{
 BDportfolio_optim(dat, portfolio_return,  
 risk=c("CVAR", "DCVAR","LSAD","MAD"), alpha=0.95,  
-Aconstr=NULL, bconstr=NULL, LB=NULL, UB=NULL, maxiter=500,tol=1e-10)
+Aconstr=NULL, bconstr=NULL, LB=NULL, UB=NULL, maxiter=500,tol=1e-8)
 }
 \arguments{
 \item{dat}{Time series of returns data; dat = cbind(rr, pk), where \eqn{rr} is an array (time series) of asset returns,
@@ -51,7 +51,7 @@ BDportfolio_optim returns a list with items:
 
 \code{MAD} \tab  portfolio MAD.\cr 
 
-\code{risk} \tab  portfolio risk measured by risk measure chosen for optimization.\cr 
+\code{risk} \tab  portfolio risk measured by the risk measure chosen for optimization.\cr 
 
 \code{new_portfolio_return} \tab  modified target portfolio return; when the original target portfolio return \cr 
 
@@ -77,9 +77,9 @@ where \cr
 \eqn{\theta} is a vector of portfolio weights. \cr
 }
 \examples{
- 
-library(Rglpk) 
 
+library (Rsymphony)  
+library(Rglpk) 
 library(mvtnorm)
 k = 3 
 num =100
@@ -98,7 +98,7 @@ LB <- rep(0,k)
 UB <- rep(1,k) 
 
 res <- BDportfolio_optim(dat, port_ret, "CVAR", alpha_optim, 
-Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-10) 
+Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-8) 
 
 cat ( c("Benders decomposition portfolio:\\n\\n")) 
 cat(c("weights \\n")) 

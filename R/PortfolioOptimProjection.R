@@ -46,7 +46,7 @@
 #'
 #'\code{MAD} \tab  portfolio MAD.\cr
 #'
-#'\code{risk} \tab  portfolio risk measured by risk measure chosen for optimization.\cr
+#'\code{risk} \tab  portfolio risk measured by the risk measure chosen for optimization.\cr
 #'
 #'\code{new_portfolio_return} \tab  modified target portfolio return; when the original target portfolio return \cr
 #'
@@ -77,7 +77,7 @@
 #'UB <- rep(1,k)  
 #'
 #'res <- PortfolioOptimProjection(dat, port_ret, risk="MAD",  
-#'alpha=alpha_optim, w_m, Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-8)
+#'alpha=alpha_optim, w_m, Aconstr, bconstr, LB, UB, maxiter=200, tol=1e-7)
 #'
 #'cat ( c("Projection optimal portfolio:\n\n"))
 #'cat(c("weights \n"))
@@ -88,8 +88,8 @@
 #' res$VaR, "\n MAD = ", res$MAD,  "\n\n"))
 #'
 #'
-#'@references Palczewski, A., Fast LP Algorithms for Portfolio Optimization, Available at SSRN: \cr
-#' https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2951213.
+#'@references Palczewski, A., LP Algorithms for Portfolio Optimization: The PortfolioOptim Package, R Journal, 10(1) (2018), 308--327. DOI:10.32614/RJ-2018-028.
+#' 
 #'
 #'Zhao, Y-B., Li, D., Locating the least 2-norm solution of linear programs via a path-following method, SIAM Journal on Optimization, 12 (2002), 893--912. DOI:10.1137/S1052623401386368.
 #'
@@ -245,7 +245,7 @@ PortfolioOptimProjection <- function (dat, portfolio_return, risk = c("CVAR", "D
   a3 = .make_diag(rep(1,n))
   amat1 = cbind(rr, a2, a3 )   # rr_k^T w + \xi + eta_k >= -sum(LB * r_k)
 
-  a4 = .make_diag(rep(1,k))
+  a4 = .make_diag(rep(-1,k))
   if (cvarind) {
     a5 = matrix(0, k, n+1)}
   else {
@@ -255,7 +255,7 @@ PortfolioOptimProjection <- function (dat, portfolio_return, risk = c("CVAR", "D
   amat2 = cbind(a4, a5)    #  w <= UB - LB
   if (is.null(UB) || is.null(LB)) amat2 = NULL
 
-  Amat = rbind(Acon1, a1, amat1, -amat2)
+  Amat = rbind(Acon1, a1, amat1, amat2)
   dimnames (Amat) = NULL
 
 
@@ -284,17 +284,17 @@ PortfolioOptimProjection <- function (dat, portfolio_return, risk = c("CVAR", "D
       bcor2 = NULL
     }
     else{
-      bcor2 = UB -LB
+      bcor2 = LB - UB
     }
   }
 
 
-  bmat = c(bcon1, portfolio_return - prcor, -bcor1, -bcor2 )
+  bmat = c(bcon1, portfolio_return - prcor, -bcor1, bcor2 )
   bmat = as.vector(bmat, mode="numeric")
 
 
 
-  res = .ZI_projection(clin, Amat, bmat, initvec, Bproj, maxiter, tol)
+  res = .ZI_projection(clin, Amat, bmat, initvec, Bproj, maxiter, tol, k)
 
   weights = res$xproj
 

@@ -1,6 +1,6 @@
 Package: PortfolioOptim
 Title: Small/Large Sample Portfolio Optimization
-Version: 1.0.3
+Version: 1.1.1
 Authors@R: c(
           person("Andrzej", "Palczewski", email = "A.Palczewski@mimuw.edu.pl", role = c("aut", "cre")),
           person("Aleksandra","Dabrowska",email = "oll.dabrowska@gmail.com", role=c("ctb")))          
@@ -10,12 +10,12 @@ License: GNU General Public License version 3
 Encoding: UTF-8
 LazyData: true
 Author: Andrzej Palczewski [aut, cre],
-        Aleksandra Dabrowska [ctb]
+  Aleksandra Dabrowska [ctb]
 Maintainer: Andrzej Palczewski <A.Palczewski@mimuw.edu.pl>
-Imports: Rglpk
-RoxygenNote: 6.0.1
-Suggests: mvtnorm, testthat
+Imports: Rsymphony
+RoxygenNote: 6.1.1
+Suggests: mvtnorm, Rglpk, testthat
 NeedsCompilation: no
-Packaged: 2017-04-20 08:38:45 UTC; apalczew
+Packaged: 2019-02-07 12:30:03 UTC; apalczew
 Repository: CRAN
-Date/Publication: 2017-04-20 08:55:52 UTC
+Date/Publication: 2019-02-07 12:53:25 UTC
